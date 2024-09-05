@@ -4,14 +4,21 @@ import { useState } from "react";
 const Calculator=()=>{
     const[val,setVal]=useState("");
     const[resultData,setResultData]=useState("");
+    const[btnClick,setBtnClick]=useState(false);
     const result=()=>{
-        setResultData(eval(val).toString());
+        setBtnClick(true);
+        setResultData(eval(val));
+    }
+    const clear=()=>{
+        setBtnClick(false);
+        setVal("");
+        setResultData("");
     }
     return(<div className={style.Calculator}>
     <h1>React Calculator</h1>
     <input type="text" value={val}  />
     <br />
-    <div>{resultData}</div>
+    <div>{btnClick && val==="" ? "Error" : resultData}</div>
     <div className={style.btnWrap}>
     <button value={7} className={style.btnStyle} onClick={(e)=>{setVal((prevVal)=>prevVal+e.target.value)}}>7</button>
     <button value={8} className={style.btnStyle} onClick={(e)=>{setVal((prevVal)=>prevVal+e.target.value)}}>8</button>
@@ -28,7 +35,7 @@ const Calculator=()=>{
     <button value={3} className={style.btnStyle} onClick={(e)=>{setVal((prevVal)=>prevVal+e.target.value)}}>3</button>
     <button value={"*"} className={style.btnStyle} onClick={(e)=>{setVal((prevVal)=>prevVal+e.target.value)}}>*</button>
     
-    <button value={"C"} className={style.btnStyle} onClick={()=>{setVal(""); setResultData("");}}>C</button>
+    <button value={"C"} className={style.btnStyle} onClick={clear}>C</button>
     <button value={0} className={style.btnStyle} onClick={(e)=>{setVal((prevVal)=>prevVal+e.target.value)}}>0</button>
     <button value={"="} className={style.btnStyle} onClick={result}>=</button>
     <button value={"/"} className={style.btnStyle} onClick={(e)=>{setVal((prevVal)=>prevVal+e.target.value)}}>/</button>
